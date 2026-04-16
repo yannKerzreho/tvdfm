@@ -4,9 +4,9 @@ A JAX/Equinox library for **Time-Varying Dynamic Factor Models (tvDFM)**
 with a GRU (or Neural CDE) exposure module that lets factor loadings $\Lambda(t)$
 vary over time.
 
-In economics, DFM models are Linear Gaussian SSMs in which the state is represented by factors from various economic time series (initialized via PCA and trained using the EM algorithm). The goal of a DFM model is not to control or estimate the state, but to estimate a low-frequency measured variable using information about the state provided by other higher-frequency variables.
+In economics, a DFM is a Linear Gaussian SSM in which a small number of latent factors drive the co-movements of a large panel of observed time series. The factors are the unobserved state; they are initialised by PCA and estimated by the EM algorithm. In a nowcasting application the model is run on a panel of monthly indicators, the Kalman filter tracks the latent factors in real time, and those factor estimates are then used to forecast a lower-frequency target variable — here, quarterly GDP.
 
-The idea behind this project is to add a layer of supervised learning specifically designed to estimate this variable of interest (in this case, GDP). The neural network learns a deviation in the measurement/weight matrix $\delta\Lambda(t)$ based on macroeconomic variables. An early stopping mechanism is implemented for the last four years of the dataset.
+The standard DFM fixes the loading matrix $\Lambda$ throughout the sample. This library relaxes that assumption: a GRU reads the current monthly observables and outputs a time-varying perturbation $\delta\Lambda(t)$ to the baseline loadings, allowing the factor–GDP relationship to shift across regimes. Training is supervised on GDP forecast error, and a held-out validation window (the last four years of the training set) is used for early stopping of the GRU.
 
 ---
 
