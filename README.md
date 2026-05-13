@@ -63,9 +63,9 @@ optimal.
 
 ## Model
 
-$$x_t = \Lambda(t)\, f_t + \varepsilon_t, \qquad \varepsilon_t \sim \mathcal{N}(0, R)$$
+$$x_t = \Lambda(t) f_t + \varepsilon_t, \qquad \varepsilon_t \sim \mathcal{N}(0, R)$$
 
-$$f_t = A\, f_{t-1} + \eta_t, \qquad \eta_t \sim \mathcal{N}(0, Q)$$
+$$f_t = A f_{t-1} + \eta_t, \qquad \eta_t \sim \mathcal{N}(0, Q)$$
 
 $$\Lambda(t) = \Lambda_\text{base} + \delta\Lambda(t)$$
 
@@ -77,7 +77,7 @@ $\delta\Lambda(t)$ of the same shape as $\Lambda_\text{base}$.
 
 Training jointly minimises:
 
-$$\mathcal{L} = \text{MSE}_\text{target}(\hat{y},\, y) \;+\; \lambda \,\|\delta\Lambda\|_F^2$$
+$$\mathcal{L} = \text{MSE}_\text{target}(\hat{y}, y) + \lambda \,\|\delta\Lambda\|_F^2$$
 
 over multiple forecast horizons (horizon augmentation), with the
 Kalman filter used as a differentiable decoder.
